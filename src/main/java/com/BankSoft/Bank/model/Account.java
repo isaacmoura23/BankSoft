@@ -1,11 +1,23 @@
 package com.BankSoft.Bank.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_conta")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Account {
 
-    private
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private double saldo;
+    private User user;
 }
