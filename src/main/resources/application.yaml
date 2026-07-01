@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: Bank
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/BankSoft
+    username: root
+    password: 1503
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
