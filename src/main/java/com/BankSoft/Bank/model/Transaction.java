@@ -1,35 +1,35 @@
 package com.BankSoft.Bank.model;
 
+import com.BankSoft.Bank.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Controller;
 
+import java.math.BigDecimal;
 @Entity
-@Table(name = "tb_cadastro_user")
+@Table(name = "tb_transacao")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(unique = true, nullable = false)
-    private String email;
+    private BigDecimal amount;
 
     @Column(nullable = false)
-    private String password;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
+    @ManyToOne
     @JoinColumn(name = "account_id")
-    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
 }
