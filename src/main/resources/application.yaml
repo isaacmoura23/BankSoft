@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/BankSoft
-    username: root
-    password: 1503
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
