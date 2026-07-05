@@ -3,7 +3,9 @@ package com.BankSoft.Bank.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
+@Builder
 public record UserRequestDTO(
         @NotBlank(message = "Nome é obrigatorio")
         String name,
