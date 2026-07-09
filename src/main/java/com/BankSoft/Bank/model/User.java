@@ -27,8 +27,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @JoinColumn(name = "account_id")
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private Account account;
 
 }
