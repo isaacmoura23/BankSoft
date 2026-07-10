@@ -8,6 +8,7 @@ import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.repository.AccountRepository;
 import com.BankSoft.Bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,11 +20,23 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
 
-    public AccountResponseDTO findById(Long id) {
-        Account account = accountRepository.findById(id)
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDTO) {
+        User user = userRepository.findById(accountRequestDTO.userId())
                     .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
 
-        return toResponseDTO(account);
+        Account account = user.getAccount();
+
+        if (account != null){
+            throw new RuntimeException("Usuario ja cadastradio");
+        }
+
+        account = Account.builder()
+                .balance(BigDecimal.ZERO)
+                .user(user) .build();
+
+        user.setAccount(account);
+        userRepository.save(user);
+        return null;
     }
 
     private AccountResponseDTO toResponseDTO(Account account) {
