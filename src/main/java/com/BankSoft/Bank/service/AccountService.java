@@ -2,13 +2,11 @@ package com.BankSoft.Bank.service;
 
 import com.BankSoft.Bank.dto.AccountRequestDTO;
 import com.BankSoft.Bank.dto.AccountResponseDTO;
-import com.BankSoft.Bank.dto.UserResponseDTO;
 import com.BankSoft.Bank.model.Account;
 import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.repository.AccountRepository;
 import com.BankSoft.Bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,21 +20,22 @@ public class AccountService {
 
     public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDTO) {
         User user = userRepository.findById(accountRequestDTO.userId())
-                    .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         Account account = user.getAccount();
 
         if (account != null){
-            throw new RuntimeException("Usuario ja cadastradio");
+            throw new RuntimeException("Usuário já possui uma conta");
         }
 
         account = Account.builder()
                 .balance(BigDecimal.ZERO)
-                .user(user) .build();
+                .user(user)
+                .build();
 
         user.setAccount(account);
-        userRepository.save(user);
-        return null;
+        User savedUser = userRepository.save(user);
+        return toResponseDTO(savedUser.getAccount());
     }
 
     private AccountResponseDTO toResponseDTO(Account account) {

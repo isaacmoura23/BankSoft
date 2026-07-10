@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Account {
 
     @Id
@@ -26,4 +27,5 @@ public class Account {
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
+
 }
