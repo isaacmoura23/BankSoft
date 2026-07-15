@@ -7,6 +7,7 @@ import com.BankSoft.Bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,13 @@ public class UserService {
                 user.getName(),
                 user.getEmail()
         );
+    }
+
+    public List<UserResponseDTO> findAll(){
+        return userRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
     public UserResponseDTO findByEmail(String email) {
