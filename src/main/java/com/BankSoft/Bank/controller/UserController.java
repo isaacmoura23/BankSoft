@@ -1,7 +1,9 @@
 package com.BankSoft.Bank.controller;
 
+import com.BankSoft.Bank.dto.AccountResponseDTO;
 import com.BankSoft.Bank.dto.UserRequestDTO;
 import com.BankSoft.Bank.dto.UserResponseDTO;
+import com.BankSoft.Bank.model.Account;
 import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.service.UserService;
 import jakarta.validation.Valid;
@@ -19,23 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponseDTO findById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-
-    @GetMapping("/userAll")
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserResponseDTO> findAll(){
-        return userService.findAll();
-    }
-
-    @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponseDTO findByEmail(@RequestParam String email) {
-        return userService.findByEmail(email);
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

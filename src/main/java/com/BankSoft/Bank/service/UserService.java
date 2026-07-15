@@ -1,38 +1,21 @@
 package com.BankSoft.Bank.service;
 
+import com.BankSoft.Bank.dto.AccountResponseDTO;
 import com.BankSoft.Bank.dto.UserRequestDTO;
 import com.BankSoft.Bank.dto.UserResponseDTO;
+import com.BankSoft.Bank.model.Account;
 import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserResponseDTO findById(Long id){
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return toResponseDTO(user);
-    }
-
-    public List<UserResponseDTO> findAll(){
-        return userRepository.findAll()
-                .stream()
-                .map(this::toResponseDTO)
-                .toList();
-    }
-
-    public UserResponseDTO findByEmail(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return toResponseDTO(user);
-    }
 
     private UserResponseDTO toResponseDTO(User user) {
         return new UserResponseDTO(
@@ -43,12 +26,19 @@ public class UserService {
     }
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        User user = new User();
-        user.setName(userRequestDTO.name());
-        user.setEmail(userRequestDTO.email());
-        user.setPassword(userRequestDTO.password());
+        Optional<User> user = userRepository.findByEmail(userRequestDTO.email());
 
-        User saved = userRepository.save(user);
+        if (user.isPresent()){
+            throw new RuntimeException("Já existe um usuário com esse e-mail");
+        }
+
+        User user1 = User.builder()
+                .name(userRequestDTO.name())
+                .email(userRequestDTO.email())
+                .password(userRequestDTO.password())
+                .build();
+
+        User saved = userRepository.save(user1);
         return toResponseDTO(saved);
     }
 
@@ -64,7 +54,7 @@ public class UserService {
         return toResponseDTO(saved);
     }
 
-    public UserResponseDTO deleteUser (Long id){
+    public UserResponseDTO deleteUser ( Long id){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
