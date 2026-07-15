@@ -16,6 +16,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponseDTO findByEmail(@RequestParam String email) {
+        return userService.findByEmail(email);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

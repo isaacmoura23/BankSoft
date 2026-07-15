@@ -23,6 +23,12 @@ public class UserService {
         );
     }
 
+    public UserResponseDTO findByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return toResponseDTO(user);
+    }
+
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         Optional<User> user = userRepository.findByEmail(userRequestDTO.email());
 
