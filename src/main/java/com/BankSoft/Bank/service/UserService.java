@@ -1,9 +1,7 @@
 package com.BankSoft.Bank.service;
 
-import com.BankSoft.Bank.dto.AccountResponseDTO;
 import com.BankSoft.Bank.dto.UserRequestDTO;
 import com.BankSoft.Bank.dto.UserResponseDTO;
-import com.BankSoft.Bank.model.Account;
 import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
