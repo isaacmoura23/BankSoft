@@ -6,8 +6,9 @@ import com.BankSoft.Bank.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Account")
@@ -28,7 +29,9 @@ public class AccountController {
         return accountService.createAccount(accountRequestDTO);
     }
 
-
-
-
+    @GetMapping("/accountAll")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AccountResponseDTO> findAll(){
+        return accountService.findAll();
+    }
 }

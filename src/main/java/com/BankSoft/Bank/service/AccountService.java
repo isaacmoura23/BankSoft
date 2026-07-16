@@ -6,11 +6,11 @@ import com.BankSoft.Bank.model.Account;
 import com.BankSoft.Bank.model.User;
 import com.BankSoft.Bank.repository.AccountRepository;
 import com.BankSoft.Bank.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +51,14 @@ public class AccountService {
 
         return toResponseDTO(account);
     }
+
+    public List<AccountResponseDTO> findAll(){
+        return accountRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
 
     private AccountResponseDTO toResponseDTO(Account account) {
         return new AccountResponseDTO(
