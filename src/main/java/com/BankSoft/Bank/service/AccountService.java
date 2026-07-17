@@ -52,13 +52,24 @@ public class AccountService {
         return toResponseDTO(account);
     }
 
+    public BigDecimal getBalance(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        Account account = user.getAccount();
+        if (account == null){
+            throw new RuntimeException("Usuário não possui conta");
+        }
+
+        return account.getBalance();
+    }
+
     public List<AccountResponseDTO> findAll(){
         return accountRepository.findAll()
                 .stream()
                 .map(this::toResponseDTO)
                 .toList();
     }
-
 
     private AccountResponseDTO toResponseDTO(Account account) {
         return new AccountResponseDTO(
