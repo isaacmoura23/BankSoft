@@ -43,7 +43,7 @@ public class AccountService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        Account account= user.getAccount();
+        Account account = user.getAccount();
 
         if (account == null){
             throw new RuntimeException("Usuário não possui conta");

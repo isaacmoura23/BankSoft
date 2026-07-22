@@ -2,10 +2,7 @@ package com.BankSoft.Bank.model;
 
 import com.BankSoft.Bank.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 @Entity
@@ -14,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Transaction {
 
     @Id
